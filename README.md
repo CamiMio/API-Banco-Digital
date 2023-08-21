@@ -35,6 +35,39 @@ Os `status code` abaixo correspondem as respostas da API.
 ### Listar contas bancárias
 #### `GET` `/contas?senha_banco=123`
 Esse endpoint lista todas as contas bancárias existentes.
+```javascript
+// 2 contas encontradas
+[
+    {
+        numero: "1",
+        saldo: 0,
+        usuario: {
+            nome: 'Foo Bar',
+            cpf: '00011122233',
+            data_nascimento: '2021-03-15',
+            telefone: '71999998888',
+            email: 'foo@bar.com',
+            senha: '1234'
+        }
+    },
+    {
+        numero: "2",
+        saldo: 1000,
+        usuario: {
+            nome: 'Foo Bar 2',
+            cpf: '00011122234',
+            data_nascimento: '2021-03-15',
+            telefone: '71999998888',
+            email: 'foo@bar2.com',
+            senha: '12345'
+        }
+    }
+]
+
+// nenhuma conta encontrada
+[]
+```
+
 
 
 ### Criar conta bancária
@@ -42,14 +75,20 @@ Esse endpoint lista todas as contas bancárias existentes.
 Esse endpoint cria uma conta bancária, onde será gerado um número único para identificação da conta (número da conta).
 
 
+
+
 ### Atualizar usuário da conta bancária
 #### `PUT` `/contas/:numeroConta/usuario`
 Esse endpoint atualiza apenas os dados do usuário de uma conta bancária.
 
 
+
+
 ### Excluir Conta
 #### `DELETE` `/contas/:numeroConta`
 Esse endpoint exclui uma conta bancária existente
+
+
 
 
 ### Depositar
