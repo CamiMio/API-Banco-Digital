@@ -74,19 +74,59 @@ Esse endpoint lista todas as contas bancárias existentes.
 #### `POST` `/contas`
 Esse endpoint cria uma conta bancária, onde será gerado um número único para identificação da conta (número da conta).
 
+```javascript
+// HTTP Status 201
+{
+    numero:  "1",
+    saldo: 0,
+    usuario: {
+        nome: 'Foo Bar',
+        cpf: '00011122233',
+        data_nascimento: '2021-03-15',
+        telefone: '71999998888',
+        email: 'foo@bar.com',
+        senha: '1234'
+    }
+}
+
+// HTTP Status 400, 404
+{
+    mensagem: 'Mensagem do erro!'
+}
+```
+
 
 
 
 ### Atualizar usuário da conta bancária
 #### `PUT` `/contas/:numeroConta/usuario`
 Esse endpoint atualiza apenas os dados do usuário de uma conta bancária.
+```javascript
+// HTTP Status 200
+{
+    mensagem: "Conta atualizada com sucesso!"
+}
 
-
-
+// HTTP Status 400, 404
+{
+    mensagem: "Mensagem do erro!"
+}
+```
 
 ### Excluir Conta
 #### `DELETE` `/contas/:numeroConta`
 Esse endpoint exclui uma conta bancária existente
+```javascript
+// HTTP Status 200
+{
+    mensagem: "Conta excluída com sucesso!"
+}
+
+// HTTP Status 400, 404
+{
+    mensagem: "Mensagem do erro!"
+}
+```
 
 
 
@@ -94,11 +134,46 @@ Esse endpoint exclui uma conta bancária existente
 ### Depositar
 #### `POST` `/transacoes/depositar`
 Esse endpoint soma o valor do depósito ao saldo de uma conta válida e registrar essa transação.
+```javascript
+// HTTP Status 200
+{
+    mensagem: "Depósito realizado com sucesso!"
+}
 
+// HTTP Status 400, 404
+{
+    mensagem: "Mensagem do erro!"
+}
+```
+
+#### Exemplo do registro de um depósito
+
+```javascript
+{
+    data: "2021-08-10 23:40:35",
+    numero_conta: "1",
+    valor: 10000
+}
+```
 
 ### Sacar
 #### `POST` `/transacoes/sacar`
 Esse endpoint realiza o saque de um valor em uma determinada conta bancária e registrar essa transação.
+```javascript
+// HTTP Status 200
+{
+    mensagem: "Saque realizado com sucesso!"
+}
+
+// HTTP Status 400, 404
+{
+    mensagem: "Mensagem do erro!"
+}
+```
+
+
+
+
 
 
 
@@ -106,12 +181,86 @@ Esse endpoint realiza o saque de um valor em uma determinada conta bancária e r
 #### `POST` `/transacoes/transferir`
 Esse endpoint permiti a transferência de recursos (dinheiro) de uma conta bancária para outra e registrar essa transação.
 
+```javascript
+// HTTP Status 200
+{
+    mensagem: "Transferência realizada com sucesso!"
+}
+
+// HTTP Status 400, 404
+{
+    mensagem: "Mensagem do erro!"
+}
+```
+
+
+
+
 
 ### Saldo
 #### `GET` `/contas/saldo?numero_conta=123&senha=123`
 Esse endpoint retorna o saldo de uma conta bancária.
+```javascript
+// HTTP Status 200
+{
+    saldo: 13000
+}
+
+// HTTP Status 400, 404
+{
+    mensagem: "Mensagem do erro!"
+}
+```
+
+
+
 
 
 ### Extrato
 #### `GET` `/contas/extrato?numero_conta=123&senha=123`
 Esse endpoint lista as transações realizadas de uma conta específica.
+```javascript
+// HTTP Status 200
+{
+  depositos: [
+    {
+      data: "2021-08-18 20:46:03",
+      numero_conta: "1",
+      valor: 10000
+    },
+    {
+      data: "2021-08-18 20:46:06",
+      numero_conta: "1",
+      valor: 10000
+    }
+  ],
+  saques: [
+    {
+      data: "2021-08-18 20:46:18",
+      numero_conta: "1",
+      valor: 1000
+    }
+  ],
+  transferenciasEnviadas: [
+    {
+      data: "2021-08-18 20:47:10",
+      numero_conta_origem: "1",
+      numero_conta_destino: "2",
+      valor: 5000
+    }
+  ],
+  transferenciasRecebidas: [
+    {
+      data: "2021-08-18 20:47:24",
+      numero_conta_origem: "2",
+      numero_conta_destino: "1",
+      valor: 2000
+    },
+    {
+      data: "2021-08-18 20:47:26",
+      numero_conta_origem: "2",
+      numero_conta_destino: "1",
+      valor: 2000
+    }
+  ]
+}
